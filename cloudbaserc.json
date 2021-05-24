@@ -1,20 +1,51 @@
 {
-    "envId": "github-0ge203kd0a2ad7d8",
-    "version": "2.0",
-    "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
-    "functionRoot": "./functions",
-    "functions": [],
-    "region": "ap-shanghai",
-    "framework": {
-        "name": "tcb-allin",
-        "plugins": {
-            "react": {
-                "use": "@cloudbase/framework-plugin-website",
-                "inputs": {
-                    "buildCommand": "npm run build",
-                    "outputPath": "build"
-                }
-            }
+  "version": "2.0",
+  "envId": "github-0ge203kd0a2ad7d8",
+  "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
+  "functionRoot": "cloudfunctions",
+  "framework": {
+    "name": "react-starter",
+    "plugins": {
+      "client": {
+        "use": "@cloudbase/framework-plugin-website",
+        "inputs": {
+          "buildCommand": "npm run build",
+          "outputPath": "build",
+          "cloudPath": "/react-starter",
+          "envVariables": {
+            "REACT_APP_ENV_ID": "{{env.ENV_ID}}"
+          }
         }
+      },
+      "server": {
+        "use": "@cloudbase/framework-plugin-function",
+        "inputs": {
+          "functionRootPath": "cloudfunctions",
+          "functions": [
+            {
+              "name": "helloworld",
+              "timeout": 5,
+              "envVariables": {},
+              "runtime": "Nodejs10.15",
+              "memory": 256,
+              "aclRule": {
+                "invoke": true
+              }
+            }
+          ]
+        }
+      },
+      "auth": {
+        "use": "@cloudbase/framework-plugin-auth",
+        "inputs": {
+          "configs": [
+            {
+              "platform": "NONLOGIN",
+              "status": "ENABLE"
+            }
+          ]
+        }
+      }
     }
+  }
 }
