@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
       `${API_BASE_URL}/users/${USERNAME}/repos`,
       {
         headers: {
-          Authorization: `token ${TOKEN}`,
+          Authorization: `Basic ${TOKEN}`,
         },
       }
     );
