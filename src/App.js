@@ -3,11 +3,8 @@ import Hello from "./components/Hello";
 import cloudbaseLogo from "./assets/cloudbase.png";
 import reactLogo from "./assets/logo.png";
 import "./App.css";
-import ProTable from "@ant-design/pro-table";
 
 function App() {
-  const columns = []
-
   return (
     <div className="App">
       <header className="App-header">
@@ -15,9 +12,8 @@ function App() {
         <img src={reactLogo} className="react-logo" alt="logo" />
       </header>
       <main className="App-main">
-        <ProTable columns={columns} />
+        <Hello />
       </main>
-      <Hello />
     </div>
   );
 }

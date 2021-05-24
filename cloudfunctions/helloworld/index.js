@@ -19,6 +19,9 @@ exports.main = async (event, context) => {
         headers: {
           Authorization: `Basic ${TOKEN}`,
         },
+        query: {
+          type: 'all'
+        }
       }
     );
     data = repos
