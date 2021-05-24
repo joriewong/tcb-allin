@@ -7,6 +7,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cloudbase/node-sdk": "1.1.1"
+    "@cloudbase/node-sdk": "1.1.1",
+    "axios": "^0.21.1"
   }
 }
