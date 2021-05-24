@@ -4,7 +4,7 @@
   "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
   "functionRoot": "cloudfunctions",
   "framework": {
-    "name": "react-starter",
+    "name": "tcb-allin",
     "plugins": {
       "client": {
         "use": "@cloudbase/framework-plugin-website",
