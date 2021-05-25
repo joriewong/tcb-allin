@@ -1,8 +1,6 @@
 const cloud = require("@cloudbase/node-sdk");
 const axios = require("axios");
 const API_BASE_URL = "https://api.github.com";
-const USERNAME = "joriewong";
-const TOKEN = "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";
 
 exports.main = async (event, context) => {
   const app = cloud.init({
@@ -11,13 +9,14 @@ exports.main = async (event, context) => {
 
   let data = [],
     message = "ok";
+  const { username, token } = event;
 
   try {
     const { data: user } = await axios.get(
-      `${API_BASE_URL}/users/${USERNAME}`,
+      `${API_BASE_URL}/users/${username}`,
       {
         headers: {
-          Authorization: `Basic ${TOKEN}`,
+          Authorization: `Basic ${token}`,
         },
       }
     );

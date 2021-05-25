@@ -4,19 +4,25 @@ import "./index.css";
 import ProTable from "@ant-design/pro-table";
 import { Card } from "antd";
 
-export default function Hello() {
+export default function Hello({ username, token, load }) {
   const app = getApp();
 
   const request = async (params, sort, filter) => {
     const { pageSize, current } = params;
     const { result: user } = await app.callFunction({
       name: "user",
+      data: {
+        username,
+        token,
+      },
     });
     const { result: repositories } = await app.callFunction({
       name: "list-repositories-by-user",
       data: {
         pageSize,
         current,
+        username,
+        token,
       },
     });
 
@@ -55,7 +61,10 @@ export default function Hello() {
           target="_blank"
           rel="noreferrer"
         >
-          <img src="https://main.qcloudimg.com/raw/95b6b680ef97026ae10809dbd6516117.svg" alt="" />
+          <img
+            src="https://main.qcloudimg.com/raw/95b6b680ef97026ae10809dbd6516117.svg"
+            alt=""
+          />
         </a>,
       ],
     },
@@ -64,7 +73,11 @@ export default function Hello() {
   return (
     <div className="hello">
       <Card>
-        <ProTable rowKey="id" columns={columns} request={request} />
+        {load ? (
+          ""
+        ) : (
+          <ProTable rowKey="id" columns={columns} request={request} />
+        )}
       </Card>
     </div>
   );
