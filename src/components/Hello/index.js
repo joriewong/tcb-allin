@@ -1,32 +1,31 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { getApp } from "../../tcb";
 import "./index.css";
 import ProTable from "@ant-design/pro-table";
-import { Card, message } from "antd";
+import { Card } from "antd";
 
 export default function Hello() {
   const app = getApp();
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const getRepos = async () => {
-    try {
-      const { result } = await app.callFunction({
-        name: "helloworld",
-        data: {},
-      });
-      setRepos(result.data);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      message.error(e.message);
-    }
+  const request = async (params, sort, filter) => {
+    const { pageSize, current } = params;
+    const { result: user } = await app.callFunction({
+      name: "user",
+    });
+    const { result: repositories } = await app.callFunction({
+      name: "list-repositories-by-user",
+      data: {
+        pageSize,
+        current,
+      },
+    });
+
+    return {
+      data: repositories.data,
+      success: repositories.message === "ok",
+      total: user.data.public_repos,
+    };
   };
-
-  useEffect(() => {
-    getRepos();
-  }, []);
 
   const columns = [
     {
@@ -47,13 +46,16 @@ export default function Hello() {
     },
     {
       title: "Deploy",
-      key: "deploy",
+      key: "option",
+      valueType: "option",
       render: (_, record) => [
         <a
+          key={record.id}
           href={`https://console.cloud.tencent.com/tcb/env/index?action=CreateAndDeployCloudBaseProject&appUrl=${record.html_url}&branch=${record.default_branch}`}
           target="_blank"
+          rel="noreferrer"
         >
-          <img src="https://main.qcloudimg.com/raw/95b6b680ef97026ae10809dbd6516117.svg" />
+          <img src="https://main.qcloudimg.com/raw/95b6b680ef97026ae10809dbd6516117.svg" alt="" />
         </a>,
       ],
     },
@@ -62,7 +64,7 @@ export default function Hello() {
   return (
     <div className="hello">
       <Card>
-        <ProTable loading={loading} columns={columns} dataSource={repos} />
+        <ProTable rowKey="id" columns={columns} request={request} />
       </Card>
     </div>
   );

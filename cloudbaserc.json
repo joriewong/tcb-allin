@@ -23,8 +23,18 @@
           "functionRootPath": "cloudfunctions",
           "functions": [
             {
-              "name": "helloworld",
-              "timeout": 5,
+              "name": "list-repositories-user",
+              "timeout": 10,
+              "envVariables": {},
+              "runtime": "Nodejs10.15",
+              "memory": 256,
+              "aclRule": {
+                "invoke": true
+              }
+            },
+            {
+              "name": "user",
+              "timeout": 10,
               "envVariables": {},
               "runtime": "Nodejs10.15",
               "memory": 256,
