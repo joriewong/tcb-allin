@@ -23,7 +23,7 @@
           "functionRootPath": "cloudfunctions",
           "functions": [
             {
-              "name": "list-repositories-user",
+              "name": "list-repositories-by-user",
               "timeout": 10,
               "envVariables": {},
               "runtime": "Nodejs10.15",
