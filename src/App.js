@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Repository from "./components/Repository";
 import cloudbaseLogo from "./assets/cloudbase.png";
@@ -16,6 +17,7 @@ function App() {
       setLoad(false);
       return;
     }
+
     Modal.confirm({
       title: "GitHub Authorization",
       icon: "",

@@ -2,7 +2,21 @@ import React from "react";
 import { getApp } from "../../tcb";
 import "./index.css";
 import ProTable from "@ant-design/pro-table";
-import { Card } from "antd";
+import { Card, Tag } from "antd";
+
+const colors = [
+  "magenta",
+  "red",
+  "volcano",
+  "orange",
+  "gold",
+  "lime",
+  "green",
+  "cyan",
+  "blue",
+  "geekblue",
+  "purple",
+];
 
 export default function Hello({ username, token, load }) {
   const app = getApp();
@@ -43,12 +57,25 @@ export default function Hello({ username, token, load }) {
       dataIndex: "full_name",
     },
     {
+      title: "Language",
+      dataIndex: "language",
+      width: 100,
+      render: (dom) => {
+        const i = Math.round(Math.random() * 10);
+        return <Tag color={colors[i]}>{dom}</Tag>;
+      },
+    },
+    {
       title: "HTTPS",
       dataIndex: "clone_url",
     },
     {
       title: "SSH",
       dataIndex: "ssh_url",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
     },
     {
       title: "Deploy",
@@ -59,7 +86,7 @@ export default function Hello({ username, token, load }) {
           key={record.id}
           href={`https://console.cloud.tencent.com/tcb/env/index?action=CreateAndDeployCloudBaseProject&appUrl=${record.html_url}&branch=${record.default_branch}`}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           <img
             src="https://main.qcloudimg.com/raw/95b6b680ef97026ae10809dbd6516117.svg"
