@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Repository from "./components/Repository";
 import cloudbaseLogo from "./assets/cloudbase.png";
 import reactLogo from "./assets/logo.png";
@@ -8,12 +7,14 @@ import { Modal, Input, Space } from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 
 function App() {
-  const [username, setUsername] = useState(localStorage.getItem("username"));
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const ref = useRef({
+    username: localStorage.getItem("username"),
+    token: localStorage.getItem("token")
+  })
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    if (username && token) {
+    if (ref.current.username && ref.current.token) {
       setLoad(false);
       return;
     }
@@ -27,7 +28,7 @@ function App() {
             placeholder="Enter your username"
             prefix={<UserOutlined />}
             onChange={(e) => {
-              setUsername(e.target.value);
+              ref.current.username = e.target.value;
               localStorage.setItem("username", e.target.value);
             }}
           />
@@ -35,7 +36,7 @@ function App() {
             placeholder="Enter your token"
             prefix={<KeyOutlined />}
             onChange={(e) => {
-              setToken(e.target.value);
+              ref.current.token = e.target.value;
               localStorage.setItem("token", e.target.value);
             }}
           />
@@ -54,7 +55,7 @@ function App() {
         <img src={reactLogo} className="react-logo" alt="logo" />
       </header>
       <main className="App-main">
-        <Repository username={username} token={token} load={load} />
+        <Repository username={ref.current.username} token={ref.current.token} load={load} />
       </main>
     </div>
   );
