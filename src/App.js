@@ -9,8 +9,8 @@ import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 function App() {
   const ref = useRef({
     username: localStorage.getItem("username"),
-    token: localStorage.getItem("token")
-  })
+    token: localStorage.getItem("token"),
+  });
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
@@ -20,7 +20,11 @@ function App() {
     }
 
     Modal.confirm({
-      title: "GitHub Authorization",
+      title: (
+        <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">
+          Get GitHub Authorization
+        </a>
+      ),
       icon: "",
       content: (
         <Space direction="vertical" style={{ width: "100%" }}>
@@ -55,7 +59,11 @@ function App() {
         <img src={reactLogo} className="react-logo" alt="logo" />
       </header>
       <main className="App-main">
-        <Repository username={ref.current.username} token={ref.current.token} load={load} />
+        <Repository
+          username={ref.current.username}
+          token={ref.current.token}
+          load={load}
+        />
       </main>
     </div>
   );
