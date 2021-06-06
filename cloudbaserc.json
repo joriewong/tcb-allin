@@ -41,6 +41,16 @@
               "aclRule": {
                 "invoke": true
               }
+            },
+            {
+              "name": "oauth",
+              "timeout": 10,
+              "envVariables": {},
+              "runtime": "Nodejs10.15",
+              "memory": 256,
+              "aclRule": {
+                "invoke": true
+              }
             }
           ]
         }

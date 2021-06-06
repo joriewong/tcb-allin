@@ -7,16 +7,16 @@ exports.main = async (event, context) => {
     env: cloud.SYMBOL_CURRENT_ENV,
   });
 
-  const { pageSize, current, username, token } = event;
+  const { pageSize, current, token } = event;
   let data = [],
     message = "ok";
 
   try {
     const { data: repositories } = await axios.get(
-      `${API_BASE_URL}/users/${username}/repos`,
+      `${API_BASE_URL}/user/repos`,
       {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `token ${token}`,
         },
         params: {
           type: 'all',

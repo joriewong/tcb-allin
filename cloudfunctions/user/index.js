@@ -9,14 +9,14 @@ exports.main = async (event, context) => {
 
   let data = [],
     message = "ok";
-  const { username, token } = event;
+  const { token } = event;
 
   try {
     const { data: user } = await axios.get(
-      `${API_BASE_URL}/users/${username}`,
+      `${API_BASE_URL}/user`,
       {
         headers: {
-          Authorization: `Basic ${token}`,
+          Authorization: `token ${token}`,
         },
       }
     );

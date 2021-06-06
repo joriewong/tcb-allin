@@ -2,7 +2,8 @@ import React from "react";
 import { getApp } from "../../tcb";
 import "./index.css";
 import ProTable from "@ant-design/pro-table";
-import { Card, Tag } from "antd";
+import { Card, Tag, message } from "antd";
+import login from "../Login";
 
 const colors = [
   "magenta",
@@ -18,33 +19,39 @@ const colors = [
   "purple",
 ];
 
-export default function Hello({ username, token, load }) {
+export default function Repository({ load }) {
   const app = getApp();
 
   const request = async (params, sort, filter) => {
     const { pageSize, current } = params;
-    const { result: user } = await app.callFunction({
-      name: "user",
-      data: {
-        username,
-        token,
-      },
-    });
-    const { result: repositories } = await app.callFunction({
-      name: "list-repositories-by-user",
-      data: {
-        pageSize,
-        current,
-        username,
-        token,
-      },
-    });
+    const token = localStorage.getItem("token");
+    const { public_repos: total } = JSON.parse(localStorage.getItem("user"));
 
-    return {
-      data: repositories.data,
-      success: repositories.message === "ok",
-      total: user.data.public_repos,
-    };
+    try {
+      const { result: repositories } = await app.callFunction({
+        name: "list-repositories-by-user",
+        data: {
+          pageSize,
+          current,
+          token,
+        },
+      });
+
+      const success = repositories.message === "ok";
+      if (!success) {
+        login();
+        return;
+      }
+
+      return {
+        data: repositories.data,
+        success,
+        total,
+      };
+    } catch (error) {
+      message.error(error);
+      login();
+    }
   };
 
   const columns = [
