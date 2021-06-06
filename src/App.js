@@ -59,6 +59,7 @@ function App() {
           message.error(error);
         });
     } else {
+      login();
     }
   }, [app, searchParams]);
 
